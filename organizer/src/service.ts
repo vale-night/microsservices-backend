@@ -1,5 +1,6 @@
 import { InternalServerError } from "./exceptions/InternalServerError";
 import { ValidationError } from "./exceptions/ValidationError";
+import { invokeService } from "./gatewayCommunication";
 import { FieldError } from "./interfaces";
 import { Organizer, OrganizerModel } from "./models/OrganizerModel";
 import { validateCNPJ, validateCPF } from "./validators";
@@ -9,8 +10,14 @@ export const saveOrganizer = async (organizer: Organizer) => {
         const errors = validateOrganizer(organizer);
         if(errors.length > 0)
             throw new ValidationError(errors);
-        const organizerToSave = new OrganizerModel(organizer);
-        return await organizerToSave.save();
+        const userToSave = {
+            email: organizer.email,
+            password: organizer.password
+        }
+        const user = await invokeService('USER', userToSave, true) as any;
+        organizer.userId = user._id;
+        const organizerToSave = await OrganizerModel.create(organizer);
+        return organizerToSave;
     } catch (error) {
         throw new InternalServerError(error);
     }

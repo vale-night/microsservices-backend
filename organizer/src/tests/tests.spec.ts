@@ -17,6 +17,8 @@ describe('Testes de Organizadores', () => {
         it('Salvar Organizador válido deverá retornar uma entidade válida com ObjectID definido e válido', async () => {
             const organizer: Organizer = {
                 name: `Organizador para Testes ${+new Date()}`,
+                email: `${+new Date()}@valenight.com`,
+                password: `teste123`,
                 cpf: '76390665067',
                 socialReason: `Razão Social Teste ${+new Date()}`,
                 fantasyName: `Nome Fantasia Teste ${+new Date()}`,

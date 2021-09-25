@@ -1,4 +1,5 @@
 import { ValidationError } from "./exceptions/ValidationError";
+import { invokeService } from "./gatewayCommunication";
 import { FieldError } from "./interfaces";
 import { Client, ClientModel } from "./models/ClientModel";
 import { validateCPF } from "./validators";
@@ -8,8 +9,14 @@ export const saveClient = async (client: Client) => {
         const errors = validateClient(client);
         if(errors.length > 0)
             throw new ValidationError(errors);
-        const clientToSave = new ClientModel(client);
-        return await clientToSave.save();
+            const userToSave = {
+                email: client.email,
+                password: client.password
+            }
+            const user = await invokeService('USER', userToSave, true) as any;
+            client.userId = user._id;
+            const clientToSave = await ClientModel.create(client);
+            return clientToSave;
     } catch (error) {
         throw error;
     }

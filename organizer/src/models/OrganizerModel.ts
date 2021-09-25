@@ -2,6 +2,8 @@ import { Schema, model } from 'mongoose';
 
 export interface Organizer {
     name: string;
+    email?: string;
+    password?: string;
     cpf: string;
     fantasyName?: string;
     cnpj?: string;
@@ -9,6 +11,7 @@ export interface Organizer {
     rg?: string;
     birthDate?: Date;
     active?: boolean;
+    userId?: string;
 }
 
 const schema = new Schema<Organizer>({
@@ -19,6 +22,7 @@ const schema = new Schema<Organizer>({
     socialReason: { type: String, required: false },
     rg: { type: String, required: false },
     birthDate: { type: Date, required: false },
+    userId: {type: String, required: false},
     active: { type: Boolean, required: true, default: true }
 });
 
