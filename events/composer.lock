@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97bba582e5796a310bef19ea3aeb01d0",
+    "content-hash": "e0e75b762664ce1035fbec1de115ea77",
     "packages": [
         {
             "name": "brick/math",
@@ -2243,6 +2243,62 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "mmghv/lumen-route-binding",
+            "version": "1.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mmghv/lumen-route-binding.git",
+                "reference": "141c56f7def1fbe4278dcf214f56ebbae000569d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mmghv/lumen-route-binding/zipball/141c56f7def1fbe4278dcf214f56ebbae000569d",
+                "reference": "141c56f7def1fbe4278dcf214f56ebbae000569d",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/lumen-framework": "5 - 8",
+                "nikic/fast-route": ">=0.4 <2.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~7.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mmghv\\LumenRouteBinding\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mohamed Gharib",
+                    "email": "mmghv@coddest.com"
+                }
+            ],
+            "description": "Route model binding for Lumen",
+            "homepage": "https://github.com/mmghv/lumen-route-binding",
+            "keywords": [
+                "bind",
+                "binding",
+                "fast-route",
+                "lumen",
+                "model",
+                "route",
+                "route model binding"
+            ],
+            "support": {
+                "issues": "https://github.com/mmghv/lumen-route-binding/issues",
+                "source": "https://github.com/mmghv/lumen-route-binding/tree/1.5.2"
+            },
+            "time": "2020-10-24T16:20:56+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -8770,7 +8826,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3|^8.0"
+        "php": "^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"

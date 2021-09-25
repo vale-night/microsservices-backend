@@ -25,8 +25,6 @@ $app = new Laravel\Lumen\Application(
 
  $app->withFacades();
 
- $app->withEloquent();
-
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -92,9 +90,10 @@ $app->configure('app');
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\RouteBindingServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
+$app->withFacades();
 
 /*
 |--------------------------------------------------------------------------
@@ -113,7 +112,8 @@ $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/api.php';
+    require __DIR__ . '/../routes/web.php';
+    require __DIR__ . '/../routes/api.php';
 });
 
 return $app;

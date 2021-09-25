@@ -13,6 +13,6 @@
 |
 */
 
-$router->post('/events', 'EventController@store');
-$router->get('/events', 'EventController@index');
-$router->get('/events/{event}', 'EventController@show');
+$router->get('/', function () use ($router) {
+    return $router->app->version();
+});
