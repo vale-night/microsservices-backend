@@ -13,8 +13,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use('/clients', routes);
-
+app.use('/organizers', routes);
 
 
 app.use((error, req, res, next) => {
@@ -22,7 +21,6 @@ app.use((error, req, res, next) => {
     res.status(error.statusCode).send({errorMessage: error.message});
     next();
 });
-
 app.listen(PORT, async () => {
     await initDb();
     console.log(`Servidor sendo executado na porta ${PORT}`);

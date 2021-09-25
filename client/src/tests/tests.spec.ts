@@ -18,6 +18,8 @@ describe('Testes de Clientes', () => {
             const client: Client = {
                 name: `Cliente para Testes ${+new Date()}`,
                 cpf: '76390665067',
+                email: `${+new Date()}@valenight.com`,
+                password: `teste123`,
             }
             const result = await saveClient(client);
             expect(result).to.not.be.null;

@@ -1,16 +1,17 @@
 import express = require('express');
+import { InternalServerError } from './exceptions/InternalServerError';
 import { NotFoundError } from './exceptions/NotFoundError';
-import { Client } from './models/ClientModel';
+import { User } from './models/UserModel';
 
-import { deleteClient, getClient, saveClient } from './service';
+import { deleteUser, getUser, saveUser } from './service';
 const routes = express.Router();
 
 routes.get('/:id', async (req, res, next) => {
     try {
-        const client = await getClient(req.params.id);
-        if(!client)
-            throw new NotFoundError();
-        res.send(client);
+        const user = await getUser(req.params.id);
+        if (!user)
+            throw new NotFoundError('Organizador não encontrado');
+        res.send(user);
     } catch (error) {
         next(error);
     }
@@ -18,7 +19,7 @@ routes.get('/:id', async (req, res, next) => {
 
 routes.post('', async (req, res, next) => {
     try {
-        res.send(await saveClient(req.body as Client));
+        res.send(await saveUser(req.body as User));
     } catch (error) {
         next(error);
     }
@@ -26,7 +27,7 @@ routes.post('', async (req, res, next) => {
 
 routes.delete('/:id', async (req, res, next) => {
     try {
-        res.send(await deleteClient(req.params.id));
+        res.send(await deleteUser(req.params.id));
     } catch (error) {
         next(error);
     }
