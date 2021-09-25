@@ -4,24 +4,36 @@ import { Client, ClientModel } from "./models/ClientModel";
 import { validateCPF } from "./validators";
 
 export const saveClient = async (client: Client) => {
-    const errors = validateClient(client);
-    if(errors.length > 0)
-        throw new ValidationError(errors);
-    const clientToSave = new ClientModel(client);
-    return await clientToSave.save();
+    try {
+        const errors = validateClient(client);
+        if(errors.length > 0)
+            throw new ValidationError(errors);
+        const clientToSave = new ClientModel(client);
+        return await clientToSave.save();
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const getClient = async (id: string) => {
-    return await ClientModel.findOne({_id: id, active: true});
+    try {
+        return await ClientModel.findOne({_id: id, active: true});
+    } catch (error) {
+        throw error;
+    }
 }
 
 export const deleteClient = async (id: string) => {
-    const result = await ClientModel.findByIdAndUpdate(id, {
-        name: 'Usuário Deletado',
-        cpf: null,
-        active: false
-    });
-    return true;
+    try {
+        const result = await ClientModel.findByIdAndUpdate(id, {
+            name: 'Usuário Deletado',
+            cpf: null,
+            active: false
+        }, {new: true});
+        return !result.active;
+    } catch (error) {
+        throw error;
+    }
 }
 
 function validateClient(client: Client) {
