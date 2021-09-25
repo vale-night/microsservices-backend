@@ -1,31 +1,40 @@
+import { InternalServerError } from "./exceptions/InternalServerError";
 import { ValidationError } from "./exceptions/ValidationError";
 import { FieldError } from "./interfaces";
 import { Organizer, OrganizerModel } from "./models/OrganizerModel";
 import { validateCNPJ, validateCPF } from "./validators";
 
 export const saveOrganizer = async (organizer: Organizer) => {
-    const errors = validateOrganizer(organizer);
-    if(errors.length > 0)
-        throw new ValidationError(errors);
-    const organizerToSave = new OrganizerModel(organizer);
-    return await organizerToSave.save();
+    try {
+        const errors = validateOrganizer(organizer);
+        if(errors.length > 0)
+            throw new ValidationError(errors);
+        const organizerToSave = new OrganizerModel(organizer);
+        return await organizerToSave.save();
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
 }
 
 export const getOrganizer = async (id: string) => {
-    return await OrganizerModel.findOne({_id: id, active: true});
+    try {
+        return await OrganizerModel.findOne({_id: id, active: true});
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
 }
 
 export const deleteOrganizer = async (id: string) => {
-    console.log(id);
-    const test = await OrganizerModel.findOne({_id: id});
-    console.log(test);
-    const result = await OrganizerModel.findOneAndUpdate({_id: id}, {
-        name: 'Organizador Deletado',
-        cpf: null,
-        active: false
-    });
-    console.log(result);
-    return true;
+    try {
+        const result = await OrganizerModel.findOneAndUpdate({_id: id}, {
+            name: 'Organizador Deletado',
+            cpf: null,
+            active: false
+        }, {new: true}).exec();
+        return !result.active;
+    } catch (error) {
+        throw new InternalServerError(error);
+    }
 }
 
 function validateOrganizer(organizer: Organizer) {

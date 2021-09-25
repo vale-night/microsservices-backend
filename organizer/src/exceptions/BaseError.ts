@@ -1,4 +1,9 @@
-export class BaseError extends Error {
+export interface IBaseError extends Error {
+    name: string;
+    statusCode: number;
+    description: string
+}
+export class BaseError extends Error implements IBaseError {
     name: string;
     statusCode: number;
     description: string
