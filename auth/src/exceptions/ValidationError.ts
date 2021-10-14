@@ -1,4 +1,4 @@
-import { httpStatusCodes } from "../constants";
+import { httpStatusCodes } from "../interfaces/constants";
 import { FieldError } from "../interfaces";
 import { BaseError } from "./BaseError";
 

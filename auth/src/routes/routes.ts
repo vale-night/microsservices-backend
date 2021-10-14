@@ -1,7 +1,7 @@
 import express = require('express');
-import { NotFoundError } from './exceptions/NotFoundError';
+import { NotFoundError } from '../exceptions/NotFoundError';
 
-import { authenticateUser, isValidJwt } from './service';
+import { authenticateUser, isValidJwt } from '../services/service';
 const routes = express.Router();
 
 routes.post('/login', async (req, res, next) => {

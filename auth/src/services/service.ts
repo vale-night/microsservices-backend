@@ -1,7 +1,7 @@
-import { InternalServerError } from "./exceptions/InternalServerError";
-import { ValidationError } from "./exceptions/ValidationError";
-import { FieldError } from "./interfaces";
-import { User, UserModel } from "./models/UserModel";
+import { InternalServerError } from "../exceptions/InternalServerError";
+import { ValidationError } from "../exceptions/ValidationError";
+import { FieldError } from "../interfaces/interfaces";
+import { User, UserModel } from "../models/UserModel";
 import bcrypt = require('bcrypt');
 import jsonwebtoken = require('jsonwebtoken');
 
