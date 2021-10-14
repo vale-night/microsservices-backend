@@ -1,5 +1,5 @@
 import { httpStatusCodes } from "../constants";
-import { FieldError } from "../interfaces";
+import { FieldError } from "../interfaces/interfaces";
 import { BaseError } from "./BaseError";
 
 export class NotFoundError extends BaseError {

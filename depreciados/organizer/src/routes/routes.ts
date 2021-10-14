@@ -1,12 +1,13 @@
 import express = require('express');
-import { InternalServerError } from './exceptions/InternalServerError';
-import { NotFoundError } from './exceptions/NotFoundError';
-import { Organizer } from './models/OrganizerModel';
+import { InternalServerError } from '../exceptions/InternalServerError';
+import { NotFoundError } from '../exceptions/NotFoundError';
+import { handleAuth } from '../middlewares/middlewares';
+import { Organizer } from '../models/OrganizerModel';
 
-import { deleteOrganizer, getOrganizer, saveOrganizer } from './service';
+import { deleteOrganizer, getOrganizer, saveOrganizer } from '../services/service';
 const routes = express.Router();
 
-routes.get('/:id', async (req, res, next) => {
+routes.get('/:id', handleAuth,async (req, res, next) => {
     try {
         const organizer = await getOrganizer(req.params.id);
         if (!organizer)
@@ -25,7 +26,7 @@ routes.post('', async (req, res, next) => {
     }
 });
 
-routes.delete('/:id', async (req, res, next) => {
+routes.delete('/:id', handleAuth, async (req, res, next) => {
     try {
         res.send(await deleteOrganizer(req.params.id));
     } catch (error) {

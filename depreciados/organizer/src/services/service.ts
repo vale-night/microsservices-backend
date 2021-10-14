@@ -1,9 +1,9 @@
-import { InternalServerError } from "./exceptions/InternalServerError";
-import { ValidationError } from "./exceptions/ValidationError";
+import { InternalServerError } from "../exceptions/InternalServerError";
+import { ValidationError } from "../exceptions/ValidationError";
 import { invokeService } from "./gatewayCommunication";
-import { FieldError } from "./interfaces";
-import { Organizer, OrganizerModel } from "./models/OrganizerModel";
-import { validateCNPJ, validateCPF } from "./validators";
+import { FieldError } from "../interfaces/interfaces";
+import { Organizer, OrganizerModel } from "../models/OrganizerModel";
+import { validateCNPJ, validateCPF } from "../util/validators";
 
 export const saveOrganizer = async (organizer: Organizer) => {
     try {

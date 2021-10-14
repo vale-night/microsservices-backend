@@ -8,6 +8,10 @@ export const SERVICE_INFO = {
     'USER': {
         name: 'Serviço de Usuário',
         endpoint: isProduction ? '' : 'http://localhost:3000/users'
+    },
+    'AUTH': {
+        name: 'Serviço de autenticação',
+        endpoint: isProduction ? '' : 'http://localhost:3000/'
     }
 }
 
