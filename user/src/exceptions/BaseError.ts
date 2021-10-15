@@ -3,6 +3,8 @@ export interface IBaseError extends Error {
     statusCode: number;
     description: string
 }
+
+//TODO - Provavelmente o API Gateway irá tratar isso, então, essa classe poderá ser descontinuada
 export class BaseError extends Error implements IBaseError {
     name: string;
     statusCode: number;

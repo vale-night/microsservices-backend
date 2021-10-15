@@ -1,5 +1,5 @@
-import { httpStatusCodes } from "../constants";
-import { FieldError } from "../interfaces";
+import { httpStatusCodes } from "../interfaces/constants";
+import { FieldError } from "../interfaces/interfaces";
 import { BaseError } from "./BaseError";
 
 export class ValidationError extends BaseError {

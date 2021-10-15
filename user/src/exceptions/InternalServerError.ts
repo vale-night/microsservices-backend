@@ -1,4 +1,4 @@
-import { httpStatusCodes } from "../constants";
+import { httpStatusCodes } from "../interfaces/constants";
 import { BaseError } from "./BaseError";
 
 export class InternalServerError extends BaseError {

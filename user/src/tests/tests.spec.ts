@@ -3,9 +3,9 @@ import 'mocha';
 import { ObjectId } from 'mongoose';
 import { initDb } from '../db';
 import { ValidationError } from '../exceptions/ValidationError';
-import { FieldError } from '../interfaces';
+import { FieldError } from '../interfaces/interfaces';
 import { User } from '../models/UserModel';
-import { deleteUser, getUser, saveUser } from '../service';
+import { deleteUser, getUser, saveUser } from '../services/service';
 
 let mongooseConnection: typeof import('mongoose');
 let userId: ObjectId;
@@ -16,8 +16,9 @@ describe('Testes de Usuários', () => {
 
         it('Salvar Usuário válido deverá retornar uma entidade válida com ObjectID definido e válido', async () => {
             const user: User = {
-                email: `${+ new Date()}@valenight.com`,
-                password: `senha`
+                email: `${+new Date()}@valenight.com`,
+                password: `senha`,
+                type: 'CLIENT'
             }
             const result = await saveUser(user);
             expect(result).to.not.be.null;
