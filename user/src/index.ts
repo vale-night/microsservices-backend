@@ -3,6 +3,27 @@ import express = require('express');
 import cors = require('cors');
 import routes from './routes/routes';
 import { initDb } from './db';
+import swaggerUi = require('swagger-ui-express');
+
+const swaggerJsdoc = require('swagger-jsdoc');
+
+const options = {
+  definition: {
+    // openapi: '3.0.0',
+    swagger: '2.0',
+    info: {
+      title: 'Serviço de Autenticação',
+      description: 'Este serviço será utilizado para autenticar o consumidor, gerando tokens JWT que poderão ser utilizados noutros serviços',
+      version: '1.0.0',
+    },
+    host: '',
+    basePath: '/user'
+  },
+  apis: ['**/*.ts'], // files containing annotations as above
+};
+
+const openapiSpecification = swaggerJsdoc(options);
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +35,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/users', routes);
+app.use('/users/v1/api-docs/', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+
 
 
 app.use((error, req, res, next) => {
