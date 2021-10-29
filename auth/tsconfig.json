@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "module": "commonJS",
+        "outDir": "dist"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
