@@ -16,7 +16,7 @@ const routes = express.Router();
  *          produces:
  *              - "application/json"
  *          parameters:
- *          - in: patj
+ *          - in: path
  *            name: "id"
  *            description: "ID do usuário"
  *            schema:
@@ -28,7 +28,7 @@ const routes = express.Router();
  *                  content:
  *                      application/json:
  *                          schema:
- *                              $ref: #definitions/User
+ *                              $ref: '#/definitions/User'
  */
 routes.get('/:id', handleAuth, async (req, res, next) => {
     try {
@@ -41,6 +41,29 @@ routes.get('/:id', handleAuth, async (req, res, next) => {
     }
 });
 
+/**
+ * @swagger
+ *  /:
+ *      post:
+ *          description: Salva um novo usuário
+ *          consumes:
+ *              - "application/json"
+ *          produces:
+ *              - "application/json"
+ *          parameters:
+ *          - in: body
+ *            name: "id"
+ *            description: "ID do usuário"
+ *            schema:
+ *               $ref: '#/definitions/User'
+ *          responses:
+ *              200:
+ *                  description: Usuário salvo no banco de dados
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/definitions/User'
+ */
 routes.post('', async (req, res, next) => {
     try {
         const user = req.body as User;
@@ -52,6 +75,30 @@ routes.post('', async (req, res, next) => {
     }
 });
 
+/**
+ * @swagger
+ *  /{id}:
+ *      delete:
+ *          description: Deleta um usuário com o ID especificado
+ *          consumes:
+ *              - "application/json"
+ *          produces:
+ *              - "application/json"
+ *          parameters:
+ *          - in: path
+ *            name: "id"
+ *            description: "ID do usuário"
+ *            schema:
+ *               type: "integer"
+ *            required: true
+ *          responses:
+ *              200:
+ *                  description: Booleano indicando se a deleção foi concluída ou não.
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: boolean
+ */
 routes.delete('/:id', handleAuth,async (req, res, next) => {
     try {
         res.send(await deleteUser(req.params.id));

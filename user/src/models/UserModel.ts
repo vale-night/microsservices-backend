@@ -2,39 +2,38 @@ import { Schema, model } from 'mongoose';
 
 /**
  * @swagger
- * definitions:
- *  User:
- *      type: object
- *      properties:
- *          id:
- *              type: string
- *          email: 
- *              type: string
- *              required: true
- *          password:
- *              type: string
- *              required: true
- *          type:
- *              type: string
- *              required: true
- *              enum: [CLIENT, ORGANIZER]
- *          name:
- *              required: true
- *              type: string
- *          cpf:
- *              type: string
- *          fantasyName:
- *              type: string
- *          cnpj:
- *              type: string
- *          socialReason:
- *              type: string
- *          rg:
- *              type: string
- *          birthDate:
- *              type: string
- *          active:
- *              type: boolean
+ *  definitions:
+ *   User:
+ *       type: object
+ *       properties:
+ *           id:
+ *               type: string
+ *           email: 
+ *               type: string
+ *               required: true
+ *           password:
+ *               type: string
+ *               required: true
+ *           type:
+ *               type: string
+ *               required: true
+ *               enum: [CLIENT, ORGANIZER]
+ *           name:
+ *               type: string
+ *           cpf:
+ *               type: string
+ *           fantasyName:
+ *               type: string
+ *           cnpj:
+ *               type: string
+ *           socialReason:
+ *               type: string
+ *           rg:
+ *               type: string
+ *           birthDate:
+ *               type: string
+ *           active:
+ *               type: boolean
  */
 export interface User {
     email: string;
