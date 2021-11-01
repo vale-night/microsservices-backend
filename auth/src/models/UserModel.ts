@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, ObjectId } from 'mongoose';
 import { CLIENT_USER_ROLES, Role } from '../roles/roles';
 
 /**
@@ -52,6 +52,7 @@ import { CLIENT_USER_ROLES, Role } from '../roles/roles';
  *                  enum: [READ_SELF,READ_MANY,INSERT,UPDATE_SELF,UPDATE_MANY,DELETE_SELF,DELETE_MANY]
  */
 export interface User {
+    _id?: ObjectId,
     email: string;
     password: string;
     username?: string;

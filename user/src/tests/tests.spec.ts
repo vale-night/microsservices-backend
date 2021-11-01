@@ -38,7 +38,7 @@ describe('Testes de Usuários', () => {
     // });
 
     it('Recuperar Usuário existente pelo ID deverá retornar uma entidade válida', async () => {
-        const result = await getUser(userId.toString());
+        const result = await getUser(userId.toString(), null);
         expect(result).to.not.be.null;
         expect(result).to.have.property('id');
         expect(result.id).to.be.equals(userId);
@@ -47,7 +47,7 @@ describe('Testes de Usuários', () => {
     it('Deletar Usuário pelo ID deverar excluí-lo logicamente do banco', async () => {
         const deleteResult = await deleteUser(userId.toString());
         expect(deleteResult).to.be.true;
-        const getResult = await getUser(userId.toString());
+        const getResult = await getUser(userId.toString(), null);
         expect(getResult).to.be.null;
     });
 });

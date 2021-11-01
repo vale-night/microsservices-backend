@@ -9,12 +9,21 @@ export const authenticateUser = async (user: User) => {
         active: true
     });
     if(user.username === 'tarley' && user.password === '123') {
-        userFromDb = {
+        userFromDb = await UserModel.findOne({
             name: 'Tarley',
             email: 'tarley@valenight.com',
-            password: null,
-            roles: CLIENT_USER_ROLES
-        } as User;
+            active: true
+        });
+        if(userFromDb === null) {
+            userFromDb = await UserModel.create({
+                name: 'Tarley',
+                email: 'tarley@valenight.com',
+                type: 'CLIENT',
+                password: await generateBcryptHash('123'),
+                roles: CLIENT_USER_ROLES
+            });
+        }
+        userFromDb.password = null;
     } else {
         if(!userFromDb) {
             return null;//TODO - Lançar exceção
@@ -41,6 +50,7 @@ export const isValidJwt = (jwt: string) => {
 
 const generateJwtToken = (user: User) => {
     const payload = {
+        id: user._id,
         name: user.name,
         email: user.email,
         roles: user.roles
@@ -49,5 +59,11 @@ const generateJwtToken = (user: User) => {
         expiresIn: process.env.JWT_EXPIRES_IN,
         algorithm: 'HS512'
     });
+}
+
+const generateBcryptHash = async (password: string) => {
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    return hash;
 }
 

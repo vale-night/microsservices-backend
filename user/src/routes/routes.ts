@@ -1,6 +1,6 @@
 import express = require('express');
 import { NotFoundError } from '../exceptions/NotFoundError';
-import { handleAuth } from '../middlewares/middlewares';
+import { handleAuth, hasPermission } from '../middlewares/middlewares';
 import { User } from '../models/UserModel';
 
 import { deleteUser, getUser, saveUser, validateAsClient, validateAsOrganizer } from '../services/service';
@@ -30,9 +30,9 @@ const routes = express.Router();
  *                          schema:
  *                              $ref: '#/definitions/User'
  */
-routes.get('/:id', handleAuth, async (req, res, next) => {
+routes.get('/:id', hasPermission(['READ_SELF', 'READ_MANY']), async (req, res, next) => {
     try {
-        const user = await getUser(req.params.id);
+        const user = await getUser(req.params.id, req.header('Authorization')?.split(' ')[1]);
         if (!user)
             throw new NotFoundError('Usuário não encontrado');
         res.send(user);
@@ -99,9 +99,9 @@ routes.post('', async (req, res, next) => {
  *                          schema:
  *                              type: boolean
  */
-routes.delete('/:id', handleAuth,async (req, res, next) => {
+routes.delete('/:id', hasPermission(['DELETE_SELF', 'DELETE_MANY']),async (req, res, next) => {
     try {
-        res.send(await deleteUser(req.params.id));
+        res.send(await deleteUser(req.params.id, req.header('Authorization')?.split(' ')[1]));
     } catch (error) {
         next(error);
     }

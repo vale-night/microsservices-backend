@@ -5,6 +5,8 @@ import { User, UserModel } from "../models/UserModel";
 import bcrypt = require('bcrypt');
 import { validateCNPJ, validateCPF } from "../utils/validators";
 import { CLIENT_USER_ROLES, ORGANIZER_USER_ROLES } from "../roles/roles";
+import { decodeToken, tokenHasAnyPermission } from "../middlewares/middlewares";
+import { ForbiddenError } from "../exceptions/ForbiddenError";
 
 export const saveUser = async (user: User, validate?: (user: User, errors: Array<FieldError>) => void) => {
     try {
@@ -14,6 +16,7 @@ export const saveUser = async (user: User, validate?: (user: User, errors: Array
 
         if (errors.length > 0)
             throw new ValidationError(errors);
+        assignRoles(user);
         user.password = await generateBcryptHash(user.password);
         const savedUser = await UserModel.create(user);
         return savedUser;
@@ -23,7 +26,15 @@ export const saveUser = async (user: User, validate?: (user: User, errors: Array
     }
 }
 
-export const getUser = async (id: string) => {
+export const getUser = async (id: string, token?: string) => {
+    if(token) {
+        const loggedUser = decodeToken(token);
+        if(id !== loggedUser.id) {
+            if(!tokenHasAnyPermission(token, ['READ_MANY'])) {
+                throw new ForbiddenError('Usuário sem acesso ao recurso desejado');
+            }
+        }
+    }
     try {
         return await UserModel.findOne({ _id: id, active: true });
     } catch (error) {
@@ -31,7 +42,15 @@ export const getUser = async (id: string) => {
     }
 }
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (id: string, token?: string) => {
+    if(token) {
+        const loggedUser = decodeToken(token);
+        if(id !== loggedUser.id) {
+            if(!tokenHasAnyPermission(token, ['READ_MANY'])) {
+                throw new ForbiddenError('Usuário sem acesso ao recurso desejado');
+            }
+        }
+    }
     try {
         const result = await UserModel.findOneAndUpdate({ _id: id }, {
             name: 'Usuário Deletado',
