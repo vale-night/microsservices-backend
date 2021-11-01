@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { CLIENT_USER_ROLES, Role } from '../roles/roles';
 
 /**
  * @swagger
@@ -34,10 +35,26 @@ import { Schema, model } from 'mongoose';
  *               type: string
  *           active:
  *               type: boolean
+ *           roles:
+ *              type: array
+ *              items:
+ *                  $ref: '#definitions/Role'
+ *   Role:
+ *      type: object
+ *      properties:
+ *          resources:
+ *              type: string
+ *              enum: [FILES, EVENTS, USERS]
+ *          permissions:
+ *              type: array
+ *              items:
+ *                  type: string
+ *                  enum: [READ_SELF,READ_MANY,INSERT,UPDATE_SELF,UPDATE_MANY,DELETE_SELF,DELETE_MANY]
  */
 export interface User {
     email: string;
     password: string;
+    username?: string;
     type: UserType;
     name?: string;
     cpf?: string;
@@ -47,6 +64,7 @@ export interface User {
     rg?: string;
     birthDate?: Date;
     active?: boolean;
+    roles?: Array<Role>
 }
 
 export type UserType = 'CLIENT' | 'ORGANIZER';
@@ -70,6 +88,7 @@ const schema = new Schema<User>({
     socialReason: { type: String, required: false },
     rg: { type: String, required: false },
     birthDate: { type: Date, required: false },
+    roles: {type: [], required: true, default: CLIENT_USER_ROLES},
     active: { type: Boolean, required: true, default: true }
 });
 

@@ -4,6 +4,7 @@ import { FieldError } from "../interfaces/interfaces";
 import { User, UserModel } from "../models/UserModel";
 import bcrypt = require('bcrypt');
 import { validateCNPJ, validateCPF } from "../utils/validators";
+import { CLIENT_USER_ROLES, ORGANIZER_USER_ROLES } from "../roles/roles";
 
 export const saveUser = async (user: User, validate?: (user: User, errors: Array<FieldError>) => void) => {
     try {
@@ -63,6 +64,13 @@ export const validateAsOrganizer = (user: User, errors: Array<FieldError>) => {
             message: 'CNPJ inválido ou não informado!'
         })
     }
+}
+
+const assignRoles = (user: User) => {
+    if(user.type === 'CLIENT')
+        user.roles = CLIENT_USER_ROLES;
+    else if (user.type === 'ORGANIZER')
+        user.roles = ORGANIZER_USER_ROLES;
 }
 
 const generateBcryptHash = async (password: string) => {

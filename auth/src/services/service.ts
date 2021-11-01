@@ -1,6 +1,7 @@
 import { User, UserModel } from "../models/UserModel";
 import bcrypt = require('bcrypt');
 import jsonwebtoken = require('jsonwebtoken');
+import { CLIENT_USER_ROLES } from "../roles/roles";
 
 export const authenticateUser = async (user: User) => {
     let userFromDb: User = await UserModel.findOne({
@@ -9,8 +10,10 @@ export const authenticateUser = async (user: User) => {
     });
     if(user.username === 'tarley' && user.password === '123') {
         userFromDb = {
+            name: 'Tarley',
             email: 'tarley@valenight.com',
-            password: null
+            password: null,
+            roles: CLIENT_USER_ROLES
         } as User;
     } else {
         if(!userFromDb) {
@@ -37,8 +40,10 @@ export const isValidJwt = (jwt: string) => {
 }
 
 const generateJwtToken = (user: User) => {
-    const payload = { //TODO - Adicionar ROLES no payload
-        email: user.email
+    const payload = {
+        name: user.name,
+        email: user.email,
+        roles: user.roles
     }
     return jsonwebtoken.sign(payload, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
