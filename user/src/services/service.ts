@@ -40,7 +40,7 @@ export const updateUser = async (params: User, token?: string) => {
     
     const fieldsToUpdate: User = {} as User;
     for (const key in params) {
-        if(key === 'id' || key === '_id' || key === 'password')
+        if(key === 'id' || key === '_id' || key === 'password' || key === 'TYPE')
             continue;
         if(params[key] !== userFromDb[key])
             fieldsToUpdate[key] = params[key];    
