@@ -94,8 +94,6 @@ $app->register(\App\Providers\RouteBindingServiceProvider::class);
 $app->register(\App\Providers\ConfigServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->withFacades();
-
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

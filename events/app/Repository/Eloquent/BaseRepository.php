@@ -34,10 +34,25 @@ class BaseRepository implements EloquentRepositoryInterface
 
     /**
      * @param $id
-     * @return Model
+     * @return Model|null
      */
     public function find($id): ?Model
     {
-        return $this->model->findOrFail($id);
+        return $this->model?->findOrFail($id);
+    }
+
+    /**
+     * @param array $attributes
+     * @param $id
+     *
+     * @return Model
+     */
+    public function update(array $attributes, $id): Model
+    {
+        $model = $this->find($id);
+
+        $model->update($attributes);
+
+        return $model;
     }
 }
