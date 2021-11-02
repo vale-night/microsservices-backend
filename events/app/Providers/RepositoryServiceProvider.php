@@ -15,9 +15,4 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(EventRepositoryInterface::class, EventRepository::class);
     }
-
-    public function boot()
-    {
-        //
-    }
 }

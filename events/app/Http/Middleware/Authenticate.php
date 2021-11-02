@@ -20,7 +20,11 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $client =Http::post(config('authentication.url') . '/verifyToken', [
+        if(app()->environment('local')){
+            return $next($request);
+        }
+
+        $client = Http::post(config('authentication.url') . '/verifyToken', [
             'token' => $request->header('Authorization')
         ]);
 
