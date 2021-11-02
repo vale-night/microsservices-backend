@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Anik\Form\FormRequest;
+use Axiom\Rules\LocationCoordinates;
 
 class StoreEventRequest extends FormRequest
 {
@@ -27,7 +27,10 @@ class StoreEventRequest extends FormRequest
             'name' => 'required|string',
             'description' => 'string',
             'highlight' => 'boolean',
-            'age_group' => 'string'
+            'age_group' => 'string',
+            'location.type' => 'string',
+            'location.coordinates.longitude' => [new LocationCoordinates],
+            'location.coordinates.latitude' => [new LocationCoordinates]
         ];
     }
 }

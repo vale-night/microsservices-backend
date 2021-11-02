@@ -1,0 +1,6 @@
+
+In Generator.php line 100:
+                                                  
+  Call to a member function getRoutes() on array  
+                                                  
+

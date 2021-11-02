@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2294fd321f593fc488e975a763fac28b",
+    "content-hash": "75ec652ba234a7c3dff0bfada7e504c2",
     "packages": [
         {
             "name": "anik/form-request",
@@ -322,85 +322,6 @@
                 }
             ],
             "time": "2021-08-28T21:56:17+00:00"
-        },
-        {
-            "name": "darkaonline/l5-swagger",
-            "version": "8.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DarkaOnLine/L5-Swagger.git",
-                "reference": "c882f984236ffeaebe4bed76b223ce9c3ec032fb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DarkaOnLine/L5-Swagger/zipball/c882f984236ffeaebe4bed76b223ce9c3ec032fb",
-                "reference": "c882f984236ffeaebe4bed76b223ce9c3ec032fb",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "laravel/framework": ">=8.40.0 || ^7.0",
-                "php": "^7.2 || ^8.0",
-                "swagger-api/swagger-ui": "^3.0",
-                "symfony/yaml": "^5.0",
-                "zircote/swagger-php": "3.*"
-            },
-            "require-dev": {
-                "mockery/mockery": "1.*",
-                "orchestra/testbench": "6.* || 5.*",
-                "php-coveralls/php-coveralls": "^2.0",
-                "phpunit/phpunit": "8.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "L5Swagger\\L5SwaggerServiceProvider"
-                    ],
-                    "aliases": {
-                        "L5Swagger": "L5Swagger\\L5SwaggerFacade"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "L5Swagger\\": "src"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Darius Matulionis",
-                    "email": "darius@matulionis.lt"
-                }
-            ],
-            "description": "OpenApi or Swagger integration to Laravel",
-            "keywords": [
-                "api",
-                "documentation",
-                "laravel",
-                "openapi",
-                "specification",
-                "swagger",
-                "ui"
-            ],
-            "support": {
-                "issues": "https://github.com/DarkaOnLine/L5-Swagger/issues",
-                "source": "https://github.com/DarkaOnLine/L5-Swagger/tree/8.0.9"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/DarkaOnLine",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-10-18T06:28:30+00:00"
         },
         {
             "name": "darkaonline/swagger-lume",
@@ -2156,6 +2077,52 @@
                 }
             ],
             "time": "2021-09-25T08:23:19+00:00"
+        },
+        {
+            "name": "mattkingshott/axiom",
+            "version": "v3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mattkingshott/axiom.git",
+                "reference": "c96c97fcd0913a9b64f47f0ed63adc21543dabd2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mattkingshott/axiom/zipball/c96c97fcd0913a9b64f47f0ed63adc21543dabd2",
+                "reference": "c96c97fcd0913a9b64f47f0ed63adc21543dabd2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Axiom\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A package that provides a library of reusable Laravel validation rules.",
+            "homepage": "https://github.com/mattkingshott/axiom",
+            "keywords": [
+                "axiom",
+                "laravel",
+                "php",
+                "rules",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/mattkingshott/axiom/issues",
+                "source": "https://github.com/mattkingshott/axiom/tree/v3.2.1"
+            },
+            "time": "2021-03-25T12:05:06+00:00"
         },
         {
             "name": "mmghv/lumen-route-binding",

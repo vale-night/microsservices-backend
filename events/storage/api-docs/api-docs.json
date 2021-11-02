@@ -1,0 +1,134 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "L5 OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "darius@matulionis.lt"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "L5 Swagger OpenApi dynamic host server"
+        },
+        {
+            "url": "https://projects.dev/api/v1",
+            "description": "L5 Swagger OpenApi Server"
+        }
+    ],
+    "paths": {
+        "/events/{id}": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get events informations",
+                "description": "Returns events",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Update event",
+                "description": "Returns event",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Event id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/events": {
+            "post": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Create a new event",
+                "description": "Returns event",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "200": {
+                "description": "successful operation"
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "description": "Event id",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "oauth2": [
+                "read:oauth2"
+            ]
+        }
+    ],
+    "tags": [
+        {
+            "name": "project",
+            "description": "Everything about your Projects",
+            "externalDocs": {
+                "description": "Find out more",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "user",
+            "description": "Operations about user",
+            "externalDocs": {
+                "description": "Find out more about",
+                "url": "http://swagger.io"
+            }
+        }
+    ],
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}

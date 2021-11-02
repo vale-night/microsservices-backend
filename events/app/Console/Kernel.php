@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\VendorCleanup;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
+use Mtrajano\LaravelSwagger\GenerateSwaggerDoc;
 
 class Kernel extends ConsoleKernel
 {

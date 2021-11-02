@@ -26,17 +26,8 @@ class EventRepository extends Eloquent\BaseRepository implements \App\Contracts\
         return $this->model->all();
     }
 
-    /**
-     * @param $id
-     * @return Event
-     */
-    public function find($id): Event
+    public function search(string $query): Collection
     {
-        return $this->model->find($id);
-    }
-
-    public function create(array $attributes): Event
-    {
-        return $this->model->create($attributes);
+        return collect([]);
     }
 }
