@@ -14,19 +14,20 @@ describe('Testes de Usuários', () => {
         mongooseConnection = await initDb();
     }),
 
-        it('Salvar Usuário válido deverá retornar uma entidade válida com ObjectID definido e válido', async () => {
-            const user: User = {
-                email: `${+new Date()}@valenight.com`,
-                password: `senha`,
-                type: 'CLIENT'
-            }
-            const result = await saveUser(user);
-            expect(result).to.not.be.null;
-            expect(result).to.have.property('id');
-            expect(mongooseConnection.isValidObjectId(result.id)).to.be.true;
-            userId = result.id;
-        });
-    
+    it('Salvar Usuário válido deverá retornar uma entidade válida com ObjectID definido e válido', async () => {
+        const user: User = {
+            email: `${+new Date()}@valenight.com`,
+            password: `senha`,
+            type: 'CLIENT',
+            roles: []
+        }
+        const result = await saveUser(user);
+        expect(result).to.not.be.null;
+        expect(result).to.have.property('id');
+        expect(mongooseConnection.isValidObjectId(result.id)).to.be.true;
+        userId = result.id;
+    });
+
     //TODO - Melhorar tratativa de exceções
     // it('Salvar Usuário inválido deverá retornar um erro', async () => {
     //     const user: User = {
@@ -37,7 +38,7 @@ describe('Testes de Usuários', () => {
     // });
 
     it('Recuperar Usuário existente pelo ID deverá retornar uma entidade válida', async () => {
-        const result = await getUser(userId.toString());
+        const result = await getUser(userId.toString(), null);
         expect(result).to.not.be.null;
         expect(result).to.have.property('id');
         expect(result.id).to.be.equals(userId);
@@ -46,7 +47,7 @@ describe('Testes de Usuários', () => {
     it('Deletar Usuário pelo ID deverar excluí-lo logicamente do banco', async () => {
         const deleteResult = await deleteUser(userId.toString());
         expect(deleteResult).to.be.true;
-        const getResult = await getUser(userId.toString());
+        const getResult = await getUser(userId.toString(), null);
         expect(getResult).to.be.null;
     });
 });

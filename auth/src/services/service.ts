@@ -1,6 +1,7 @@
 import { User, UserModel } from "../models/UserModel";
 import bcrypt = require('bcrypt');
 import jsonwebtoken = require('jsonwebtoken');
+import { CLIENT_USER_ROLES } from "../roles/roles";
 
 export const authenticateUser = async (user: User) => {
     let userFromDb: User = await UserModel.findOne({
@@ -8,10 +9,21 @@ export const authenticateUser = async (user: User) => {
         active: true
     });
     if(user.username === 'tarley' && user.password === '123') {
-        userFromDb = {
+        userFromDb = await UserModel.findOne({
+            name: 'Tarley',
             email: 'tarley@valenight.com',
-            password: null
-        } as User;
+            active: true
+        });
+        if(userFromDb === null) {
+            userFromDb = await UserModel.create({
+                name: 'Tarley',
+                email: 'tarley@valenight.com',
+                type: 'CLIENT',
+                password: await generateBcryptHash('123'),
+                roles: CLIENT_USER_ROLES
+            });
+        }
+        userFromDb.password = null;
     } else {
         if(!userFromDb) {
             return null;//TODO - Lançar exceção
@@ -37,12 +49,21 @@ export const isValidJwt = (jwt: string) => {
 }
 
 const generateJwtToken = (user: User) => {
-    const payload = { //TODO - Adicionar ROLES no payload
-        email: user.email
+    const payload = {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        roles: user.roles
     }
     return jsonwebtoken.sign(payload, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
         algorithm: 'HS512'
     });
+}
+
+const generateBcryptHash = async (password: string) => {
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+    return hash;
 }
 

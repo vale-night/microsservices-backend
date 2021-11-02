@@ -49,7 +49,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/users', routes);
 app.use('/users/v1/api-docs/', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
-console.log(openapiSpecification);
 
 app.use((error, req, res, next) => {
     console.error(error.stack);

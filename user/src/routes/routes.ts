@@ -1,9 +1,9 @@
 import express = require('express');
 import { NotFoundError } from '../exceptions/NotFoundError';
-import { handleAuth } from '../middlewares/middlewares';
+import { handleAuth, hasPermission } from '../middlewares/middlewares';
 import { User } from '../models/UserModel';
 
-import { deleteUser, getUser, saveUser, validateAsClient, validateAsOrganizer } from '../services/service';
+import { deleteUser, getUser, saveUser, updateUser, validateAsClient, validateAsOrganizer } from '../services/service';
 const routes = express.Router();
 
 /**
@@ -24,15 +24,15 @@ const routes = express.Router();
  *            required: true
  *          responses:
  *              200:
- *                  description: Objeto contendo o resultado da autenticação e o token.
+ *                  description: Usuário recuperado.
  *                  content:
  *                      application/json:
  *                          schema:
  *                              $ref: '#/definitions/User'
  */
-routes.get('/:id', handleAuth, async (req, res, next) => {
+routes.get('/:id', hasPermission(['READ_SELF', 'READ_MANY']), async (req, res, next) => {
     try {
-        const user = await getUser(req.params.id);
+        const user = await getUser(req.params.id, req.header('Authorization')?.split(' ')[1]);
         if (!user)
             throw new NotFoundError('Usuário não encontrado');
         res.send(user);
@@ -40,6 +40,42 @@ routes.get('/:id', handleAuth, async (req, res, next) => {
         next(error);
     }
 });
+
+/**
+ * @swagger
+ *  /{id}:
+ *      put:
+ *          description: Atualiza os dados do usuário com o ID especificado. 
+ *          consumes:
+ *              - "application/json"
+ *          produces:
+ *              - "application/json"
+ *          parameters:
+ *          - in: body
+ *            name: "user"
+ *            description: "Dados do usuário"
+ *            schema:
+ *               $ref: '#/definitions/User'
+ *          responses:
+ *              200:
+ *                  description: Informações salvas do usuário.
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/definitions/User'
+ */
+ routes.put('/:id', hasPermission(['UPDATE_SELF', 'UPDATE_MANY']), async (req, res, next) => {
+    try {
+        const token = req.header('Authorization')?.split(' ')[1];
+        const user = await updateUser(req.body as User, token);
+        if (!user)
+            throw new NotFoundError('Usuário não encontrado');
+        res.send(user);
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 /**
  * @swagger
@@ -52,8 +88,8 @@ routes.get('/:id', handleAuth, async (req, res, next) => {
  *              - "application/json"
  *          parameters:
  *          - in: body
- *            name: "id"
- *            description: "ID do usuário"
+ *            name: "user"
+ *            description: "Dados do usuário"
  *            schema:
  *               $ref: '#/definitions/User'
  *          responses:
@@ -67,9 +103,7 @@ routes.get('/:id', handleAuth, async (req, res, next) => {
 routes.post('', async (req, res, next) => {
     try {
         const user = req.body as User;
-        const validateFunction = user.type === 'CLIENT' ?
-            validateAsClient : validateAsOrganizer;
-        res.send(await saveUser(user, validateFunction));
+        res.send(await saveUser(user));
     } catch (error) {
         next(error);
     }
@@ -99,9 +133,9 @@ routes.post('', async (req, res, next) => {
  *                          schema:
  *                              type: boolean
  */
-routes.delete('/:id', handleAuth,async (req, res, next) => {
+routes.delete('/:id', hasPermission(['DELETE_SELF', 'DELETE_MANY']),async (req, res, next) => {
     try {
-        res.send(await deleteUser(req.params.id));
+        res.send(await deleteUser(req.params.id, req.header('Authorization')?.split(' ')[1]));
     } catch (error) {
         next(error);
     }
