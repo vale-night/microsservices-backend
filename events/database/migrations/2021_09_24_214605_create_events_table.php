@@ -15,6 +15,7 @@ class CreateEventsTable extends Migration
             $table->string('description')->nullable();
             $table->boolean('highlight')->default(false);
             $table->string('age_group')->nullable();
+            $table->geospatial('location', '2dsphere');
 
             $table->timestamps();
             $table->softDeletes();
