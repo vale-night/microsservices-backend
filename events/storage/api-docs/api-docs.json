@@ -88,9 +88,9 @@
                 "tags": [
                     "Events"
                 ],
-                "summary": "Update event",
-                "description": "Returns event",
-                "operationId": "update",
+                "summary": "delete event",
+                "description": "Delete event",
+                "operationId": "delete",
                 "parameters": [
                     {
                         "name": "id",

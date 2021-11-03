@@ -142,10 +142,10 @@ class EventController extends Controller
         /**
      * @OA\Delete(
      *      path="/events/{id}",
-     *      operationId="update",
+     *      operationId="delete",
      *      tags={"Events"},
-     *      summary="Update event",
-     *      description="Returns event",
+     *      summary="delete event",
+     *      description="Delete event",
      *      @OA\Parameter(
      *          name="id",
      *          description="Event id",
