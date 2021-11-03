@@ -1,25 +1,17 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "L5 OpenApi",
-        "description": "L5 Swagger OpenApi description",
+        "title": "Vale night - Eventos",
+        "description": "Micro serviços de eventos/festas",
         "contact": {
-            "email": "darius@matulionis.lt"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "email": "arthurabreu00@gmail.com"
         },
         "version": "1.0.0"
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
-            "description": "L5 Swagger OpenApi dynamic host server"
-        },
-        {
-            "url": "https://projects.dev/api/v1",
-            "description": "L5 Swagger OpenApi Server"
+            "url": "http://localhost:8888",
+            "description": "local host server"
         }
     ],
     "paths": {
@@ -56,10 +48,62 @@
                     }
                 ],
                 "requestBody": {
-                    "required": true
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the event",
+                                        "type": "string",
+                                        "example": "Nome do evento"
+                                    },
+                                    "description": {
+                                        "description": "Description of the event",
+                                        "type": "string",
+                                        "example": "Descriçãp da festa"
+                                    },
+                                    "highlight": {
+                                        "description": "Is highlight event",
+                                        "type": "boolean",
+                                        "example": "true"
+                                    },
+                                    "age_group": {
+                                        "description": "Age group of event",
+                                        "type": "string",
+                                        "example": "Jovens"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Update event",
+                "description": "Returns event",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Event id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
                         "description": "successful operation"
                     }
                 }
@@ -74,7 +118,35 @@
                 "description": "Returns event",
                 "operationId": "store",
                 "requestBody": {
-                    "required": true
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the event",
+                                        "type": "string",
+                                        "example": "Nome do evento"
+                                    },
+                                    "description": {
+                                        "description": "Description of the event",
+                                        "type": "string",
+                                        "example": "Descriçãp da festa"
+                                    },
+                                    "highlight": {
+                                        "description": "Is highlight event",
+                                        "type": "boolean",
+                                        "example": "true"
+                                    },
+                                    "age_group": {
+                                        "description": "Age group of event",
+                                        "type": "string",
+                                        "example": "Jovens"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
@@ -101,34 +173,5 @@
                 }
             }
         }
-    },
-    "security": [
-        {
-            "oauth2": [
-                "read:oauth2"
-            ]
-        }
-    ],
-    "tags": [
-        {
-            "name": "project",
-            "description": "Everything about your Projects",
-            "externalDocs": {
-                "description": "Find out more",
-                "url": "http://swagger.io"
-            }
-        },
-        {
-            "name": "user",
-            "description": "Operations about user",
-            "externalDocs": {
-                "description": "Find out more about",
-                "url": "http://swagger.io"
-            }
-        }
-    ],
-    "externalDocs": {
-        "description": "Find out more about Swagger",
-        "url": "http://swagger.io"
     }
 }
