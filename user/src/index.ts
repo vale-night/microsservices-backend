@@ -12,8 +12,8 @@ const options = {
     // openapi: '3.0.0',
     swagger: '2.0',
     info: {
-      title: 'Serviço de Autenticação',
-      description: 'Este serviço será utilizado para autenticar o consumidor, gerando tokens JWT que poderão ser utilizados noutros serviços',
+      title: 'Serviço de Usuários',
+      description: 'Este serviço será utilizado para gerenciar informações de usuários dentro do sistema.',
       version: '1.0.0',
     },
     host: '',

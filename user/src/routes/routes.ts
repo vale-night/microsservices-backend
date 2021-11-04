@@ -51,6 +51,12 @@ routes.get('/:id', hasPermission(['READ_SELF', 'READ_MANY']), async (req, res, n
  *          produces:
  *              - "application/json"
  *          parameters:
+ *          - in: path
+ *            name: "id"
+ *            description: "ID do usuário"
+ *            schema:
+ *               type: "integer"
+ *            required: true
  *          - in: body
  *            name: "user"
  *            description: "Dados do usuário"
@@ -67,6 +73,7 @@ routes.get('/:id', hasPermission(['READ_SELF', 'READ_MANY']), async (req, res, n
  routes.put('/:id', hasPermission(['UPDATE_SELF', 'UPDATE_MANY']), async (req, res, next) => {
     try {
         const token = req.header('Authorization')?.split(' ')[1];
+        req.body.id = req.params.id;
         const user = await updateUser(req.body as User, token);
         if (!user)
             throw new NotFoundError('Usuário não encontrado');
