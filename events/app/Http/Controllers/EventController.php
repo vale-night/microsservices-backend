@@ -6,7 +6,9 @@ use App\Contracts\EventRepositoryInterface;
 use App\Http\Requests\SearchEventRequest;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Event;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Laravel\Lumen\Http\Request;
 
 class EventController extends Controller
@@ -60,7 +62,10 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request): JsonResponse
     {
-        $event = $this->eventRepository->create($request->all());
+        $event = $this
+            ->eventRepository
+            ->create($request->all())
+            ->object();
         return response()->json($event);
     }
 
@@ -88,12 +93,11 @@ class EventController extends Controller
      * )
      *
      * @param Request $request
-     * @param $id
+     * @param Event $event
      * @return JsonResponse
      */
-    public function show(Request $request, $id): JsonResponse
+    public function show(Request $request, Event $event): JsonResponse
     {
-        $event = $this->eventRepository->find($id);
         return response()->json($event);
     }
 
@@ -129,17 +133,20 @@ class EventController extends Controller
      * )
      *
      * @param UpdateEventRequest $request
-     * @param $id
+     * @param Event $event
      * @return JsonResponse
      */
-    public function update(UpdateEventRequest $request, $id): JsonResponse
+    public function update(UpdateEventRequest $request, Event $event): JsonResponse
     {
-        $event = $this->eventRepository->update($request->all(), $id);
-        return response()->json($event);
+        $eventObject = $this->eventRepository
+            ->set($event)
+            ->update($request->all())
+            ->object();
+        return response()->json($eventObject);
     }
 
-    
-        /**
+
+    /**
      * @OA\Delete(
      *      path="/events/{id}",
      *      operationId="delete",
@@ -162,13 +169,13 @@ class EventController extends Controller
      * )
      *
      * @param UpdateEventRequest $request
-     * @param $id
+     * @param Event $event
      * @return JsonResponse
      */
-    public function delete(Request $request, $id)
+    public function delete(Request $request, Event $event)
     {
-        $this->eventRepository->delete($id);
-        return response()->noContent();
+        $this->eventRepository->set($event)->delete();
+        return response()->json([], 204);
     }
 
     public function search(Request $request): JsonResponse

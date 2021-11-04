@@ -22,43 +22,53 @@ class BaseRepository implements EloquentRepositoryInterface
         $this->model = $model;
     }
 
-    /**
-     * @param array $attributes
-     *
-     * @return Model
-     */
-    public function create(array $attributes): Model
+    public function set(Model $model): self
     {
-        return $this->model->create($attributes);
-    }
-
-    /**
-     * @param $id
-     * @return Model|null
-     */
-    public function find($id): ?Model
-    {
-        return $this->model?->findOrFail($id);
+        $this->model = $model;
+        return $this;
     }
 
     /**
      * @param array $attributes
-     * @param $id
      *
-     * @return Model
+     * @return self
      */
-    public function update(array $attributes, $id): Model
+    public function create(array $attributes): self
     {
-        $model = $this->find($id);
-
-        $model->update($attributes);
-
-        return $model;
+        $this->model = $this->model->create($attributes);
+        return $this;
     }
 
-    public function delete($id): bool
+    /**
+     * @param $id
+     * @return self
+     */
+    public function find($id): self
     {
-        $model = $this->find($id);
-        return $model->delete();
+        $this->model = $this->model?->findOrFail($id);
+        return $this;
+    }
+
+    public function object(): ?Model
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param array $attributes
+     * @param $id
+     *
+     * @return self
+     */
+    public function update(array $attributes): self
+    {
+        $this->model->update($attributes);
+        return $this;
+    }
+
+    public function delete(): self
+    {
+        $this->model->delete();
+        return $this;
     }
 }
