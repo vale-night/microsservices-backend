@@ -8,7 +8,7 @@ export const authenticateUser = async (user: User) => {
         email: user.username,
         active: true
     });
-    if(user.username === 'tarley' && user.password === '123') {
+    if(user.username.toLowerCase() === 'tarley' && user.password === '123') {
         userFromDb = await UserModel.findOne({
             name: 'Tarley',
             email: 'tarley@valenight.com',
