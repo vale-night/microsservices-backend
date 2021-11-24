@@ -48,3 +48,7 @@ app.listen(PORT, async () => {
     initDb();
     console.log(`Servidor sendo executado na porta ${PORT}`);
 });
+
+export {
+  app
+};

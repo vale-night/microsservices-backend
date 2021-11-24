@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "ts-node-dev --respawn --transpile-only src",
-    "test": "mocha -r ts-node/register src/tests/**/*.spec.ts"
+    "test": "mocha -r ts-node/register src/tests/**/*.spec.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vendia/serverless-express": "^4.5.2",
     "axios": "^0.23.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",

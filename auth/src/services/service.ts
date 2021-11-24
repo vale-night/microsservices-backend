@@ -1,5 +1,5 @@
 import { User, UserModel } from "../models/UserModel";
-import bcrypt = require('bcrypt');
+import bcrypt = require('bcryptjs');
 import jsonwebtoken = require('jsonwebtoken');
 import { CLIENT_USER_ROLES } from "../roles/roles";
 
