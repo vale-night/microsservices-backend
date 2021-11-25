@@ -17,7 +17,7 @@ const options = {
       version: '1.0.0',
     },
     host: '',
-    basePath: '/auth'
+    basePath: '/'
   },
   apis: ['**/*.ts'], // files containing annotations as above
 };
@@ -25,7 +25,6 @@ const options = {
 const openapiSpecification = swaggerJsdoc(options);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
     origin: '*',
@@ -33,8 +32,8 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use('/auth', routes);
-app.use('/auth/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+app.use('/', routes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 
 app.use((error, req, res, next) => {
@@ -44,11 +43,5 @@ app.use((error, req, res, next) => {
 });
 
 // app.use('/auth/docs', swaggerUi.serve, swaggerUi.setup(swaggerData));
-app.listen(PORT, async () => {
-    initDb();
-    console.log(`Servidor sendo executado na porta ${PORT}`);
-});
 
-export {
-  app
-};
+export default app;
