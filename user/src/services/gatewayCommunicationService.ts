@@ -12,10 +12,10 @@ export type SERVICES = 'AUTH_VERIFY_TOKEN';
 export const SERVICE_INFO = {
     'AUTH_VERIFY_TOKEN': {
         name: 'Verificar validade de token no serviço de autenticação',
-        endpoint: process.env.AUTH_VERIFY_TOKEN_TOKEN
+        endpoint: process.env.AUTH_VERIFY_TOKEN
     }
 }
-
+//TODO - Refatorar para utilizar lambda invoke de acordo com a necessidade
 export const invokeService = async (serviceName: SERVICES, data: any, waitResponse = false) => {
     const service = getServiceInfo(serviceName);
     const request = sendDataToService(service.endpoint, data, waitResponse);

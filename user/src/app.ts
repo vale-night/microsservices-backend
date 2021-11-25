@@ -17,7 +17,7 @@ const options = {
       version: '1.0.0',
     },
     host: '',
-    basePath: '/users',
+    basePath: '/',
     securityDefinitions: {
       BearerTokenAuth: {
         type: 'apiKey',
@@ -39,7 +39,6 @@ const openapiSpecification = swaggerJsdoc(options);
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
     origin: '*',
@@ -47,15 +46,12 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use('/users', routes);
-app.use('/users/v1/api-docs/', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+app.use('/', routes);
+app.use('/v1/api-docs/', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 app.use((error, req, res, next) => {
     console.error(error.stack);
     res.status(error.statusCode).send({errorMessage: error.message});
     next();
 });
-app.listen(PORT, async () => {
-    await initDb();
-    console.log(`Servidor sendo executado na porta ${PORT}`);
-});
+export default app;

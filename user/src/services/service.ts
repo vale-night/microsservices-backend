@@ -2,7 +2,7 @@ import { InternalServerError } from "../exceptions/InternalServerError";
 import { ValidationError } from "../exceptions/ValidationError";
 import { FieldError } from "../interfaces/interfaces";
 import { User, UserModel } from "../models/UserModel";
-import bcrypt = require('bcrypt');
+import bcrypt = require('bcryptjs');
 import { validateCNPJ, validateCPF } from "../utils/validators";
 import { CLIENT_USER_ROLES, ORGANIZER_USER_ROLES } from "../roles/roles";
 import { decodeToken, tokenHasAnyPermission } from "../middlewares/middlewares";
